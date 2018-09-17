@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Login</title>
+     <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
+    <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/conversorData.js"></script>
+</h:head>
+<h:body style="background-color: #E8E8DC">
+ 
+ <h:form>  
+    <p:growl id="messages"/>
+    
+    <p:menubar>
+        <p:submenu label="Estoque">
+            <p:menuitem value="Novo produto" url="#" />
+            <p:separator />
+            <p:menuitem value="Entrada / Saida" url="#" />
+            <p:separator />
+            <p:menuitem value="Listagem produto" url="#" />
+            <p:separator />
+            <p:menuitem value="Produtos" url="#" />
+            <p:separator />
+            <p:menuitem value="Listagem produto por data" url="#" />
+        </p:submenu>
+ 
+        <p:submenu label="Clientes">
+            <p:menuitem value="Novo cliente" url="#" />
+            <p:separator />
+            <p:menuitem value="Listagem cliente" url="#" />
+            <p:separator />
+            <p:menuitem value="Listagem cliente por data" url="#" />
+        </p:submenu>
+ 
+        <p:submenu label="Administracao">
+            <p:menuitem value="Contents" url="#" />
+            <p:submenu label="Search" icon="ui-icon-search">
+                <p:submenu label="Text">
+                    <p:menuitem value="Workspace" url="#" />
+                </p:submenu>
+                <p:menuitem value="File" url="#" />
+            </p:submenu>
+        </p:submenu>
+        
+        <p:submenu label="Transportadores">
+            <p:menuitem value="Novo transportador" url="#" />
+            <p:separator />
+            <p:menuitem value="Listagem transportadores" url="#" />
+        </p:submenu>
+        
+         <p:submenu label="Help">
+            <p:menuitem value="Contents" url="#" />
+            <p:submenu label="Search" icon="ui-icon-search">
+                <p:submenu label="Text">
+                    <p:menuitem value="Workspace" url="#" />
+                </p:submenu>
+                <p:menuitem value="File" url="#" />
+            </p:submenu>
+        </p:submenu>
+ 
+ 
+    </p:menubar>
+</h:form>
+         
+<div id="content">
+        <ui:insert name="content"></ui:insert>
+</div>         
+<script type="text/javascript" src="js/materialize.min.js"></script>
+</h:body>
+</html>

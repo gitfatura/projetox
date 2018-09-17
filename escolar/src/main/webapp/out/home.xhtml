@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Início</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/conversorData.js"/>
+    
+</h:head>
+<h:body style="background-color:#E8E8DC">
+
+    <h:form>
+       
+        <p:menubar>
+
+            <p:menuitem value="Início" url="home.xhtml" icon="ui-icon-arrow-4-diag" />
+
+            <p:submenu label="Estoque interno" icon="ui-icon-arrowthick-1-s">
+                <p:separator />
+                <p:menuitem value="Novo produto" url="produto.xhtml" icon="ui-icon-arrow-4-diag" />
+                <p:menuitem value="Produtos" url="produtos.xhtml" icon="ui-icon-arrow-4-diag"/>
+                <p:separator />
+                <p:menuitem value="Entrada Produto" url="entradaproduto.xhtml" icon="ui-icon-arrow-4-diag"/>
+                <p:menuitem value="Saida Produto" url="saidaproduto.xhtml" icon="ui-icon-arrow-4-diag"/>
+                <p:separator />
+                <p:menuitem value="Categorias" url="categorias.xhtml" icon="ui-icon-arrow-4-diag"/>
+                <p:separator />
+                
+            </p:submenu>
+
+            <p:submenu label="Estoque externo" icon="ui-icon-arrowthick-1-s">
+                <p:separator />
+                <p:menuitem value="Estoques geral" url="produtosexternosporestoque.xhtml" icon="ui-icon-arrow-4-diag" />
+                <p:menuitem value="Novo produto" url="cadastraprodutoexterno.xhtml" icon="ui-icon-arrow-4-diag"/>
+                <p:separator />
+            </p:submenu>
+
+            <p:submenu label="Clientes / Fornecedores" icon="ui-icon-arrowthick-1-s">
+                <p:menuitem value="Clientes" url="clientes.xhtml" icon="ui-icon-arrow-4-diag"/>
+                <p:separator/>
+                <p:menuitem value="Fornecedores" url="fornecedores.xhtml" icon="ui-icon-arrow-4-diag"/>
+            </p:submenu>
+
+            <p:submenu label="Relatorios" icon="ui-icon-arrowthick-1-s">
+                <p:menuitem value="Relatorio" url="#" icon="ui-icon-arrow-4-diag"/>
+            </p:submenu>
+
+            <p:submenu label="Administrativo" icon="ui-icon-arrowthick-1-s">
+                <p:menuitem value="Estoque minimo" url="#" icon="ui-icon-arrow-4-diag"/>
+                <p:menuitem value="Estoque maximo" url="#" icon="ui-icon-arrow-4-diag"/>
+                <p:menuitem value="Estoque por vendedores" url="#" icon="ui-icon-arrow-4-diag"/>
+                <p:menuitem value="Permissoes de usuarios" url="#" icon="ui-icon-arrow-4-diag"/>
+            </p:submenu>
+
+            <f:facet name="options">
+                <p:commandButton  value="Sair" action="#{loginMB.logoff}" icon="ui-icon-extlink" />
+            </f:facet>
+
+        </p:menubar>
+
+    </h:form>
+
+    <div id="content">
+        <ui:insert name="content"></ui:insert>
+    </div>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</h:body>
+</html>
