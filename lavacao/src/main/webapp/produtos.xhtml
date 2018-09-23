@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/Layout.xhtml">
+	
+	<ui:define name="content">
+		<p:panel id="toggleable" header="Produtos" toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-top: 60px;margin-bottom:40px">
+        
+
+            <h:form id="frmproduto">
+                                                                    
+                <p:dataTable var="produto" id="produtos" reflow="true" value="#{produtoMB.produtos}" 
+                    rows="10" paginator="true"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15,50"  paginatorPosition="bottom" emptyMessage="Nenhum produto encontrado">
+                                    
+                    <p:column style="width: 50px">
+                             <p:commandButton oncomplete="PF('atualizaproduto').show()" icon="ui-icon-pencil" process="@this" update="frmproduto">
+                                    <f:setPropertyActionListener value="#{produto}" target="#{produtoMB.produto}" />
+                             </p:commandButton>
+                    </p:column>
+                        
+                    <p:column headerText="Descrição"  sortBy="#{produto.descricao}" >
+                        <h:outputText value="#{produto.descricao}" />
+                    </p:column>
+                    
+                        
+                    <p:column headerText="Estoque">
+                        <h:outputText value="#{produto.qtd}" />
+                    </p:column>
+
+                
+                    <p:column headerText="Preço">
+                        <h:outputText value="#{produto.preco}">
+                                <f:convertNumber  type="currency" currencySymbol="R$"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Data">
+                            <h:outputText value="#{produto.data}">
+                                    <f:convertDateTime/>
+                            </h:outputText>
+                    </p:column>
+                    
+                    
+                    <p:column style="width: 50px">              
+                            <p:commandButton oncomplete="PF('removerproduto').show()" icon="ui-icon-trash" process="@this" update="frmproduto">
+                                    <f:setPropertyActionListener value="#{produto}" target="#{produtoMB.produto}" />
+                            </p:commandButton>
+                    </p:column>
+                    
+                    <p:column style="width: 50px">              
+                            <p:commandButton oncomplete="PF('produtodetalhe').show()" icon="ui-icon-search" process="@this" update="frmproduto">
+                                    <f:setPropertyActionListener value="#{produto}" target="#{produtoMB.produto}" />
+                            </p:commandButton>
+                    </p:column>
+                    
+                        <f:facet name="footer">
+                                    Total de produto cadastrado #{produtoMB.produtos.size()}
+                        </f:facet>
+                        
+                </p:dataTable>
+                
+                
+                <p:dialog header="Deseja excluir o Produto" modal="true" widgetVar="removerproduto" width="350" height="100"  resizable="false" >
+                    
+                        <div class="col-70">
+                            <p:outputLabel value="#{produtoMB.produto.descricao}"/><hr/>
+                         </div>
+                                                                        
+                            <p:button value="Não" onclick="PF('removerproduto').hide(); return false;" />
+                                <p:commandButton value="Sim" action="#{produtoMB.remove}" update="frmproduto:produtos"  onclick="PF('removerproduto').hide()"/>
+                                                            
+                </p:dialog>
+                
+                
+                
+                <p:dialog header="Atualizar Produto" modal="true" draggable="true" toggleSpeed="400" width="500" closeSpeed="900" resizable="false" widgetVar="atualizaproduto" style="margin-top: 50px;margin-bottom:40px" >
+                        
+                            <div class="row" >
+                            
+                                     <div class="col-50">
+                                        <p:outputLabel for="descricao" value="Descricao"/>
+                                        <p:inputText id="descricao" maxlength="255" value="#{produtoMB.produto.descricao}" required="true" requiredMessage="Descriçao  obrigatorio"/>
+                                    </div>
+         
+                                </div>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <p:outputLabel for="quantidade" value="Estoque"/>
+                                        <p:inputText  id="quantidade" value="#{produtoMB.produto.qtd}"  required="true" requiredMessage="Quantidade  obrigatorio"/>
+                                    </div>
+                                        <div class="col-25">
+                                                <p:outputLabel for="pcompra" value="Preço"/>
+                                                <p:inputNumber id="pcompra" value="#{produtoMB.produto.preco}"  symbol="R$" required="true" requiredMessage="Preço  obrigatorio"/>
+                                        </div>
+                                        
+                                        <div class="col-25">
+                                                <p:outputLabel for="pdata" value="Data"/>
+                                                <p:calendar id="pdata" value="#{produtoMB.produto.data}"  pattern="dd/MM/yyyy"   locale="pt" required="true" requiredMessage="Data obrigatorio"/>
+                                        </div>
+                                </div>
+                        <p:commandButton value="Registrar" action="#{produtoMB.atualizaProduto}" update="frmproduto" />
+                                                            
+                </p:dialog>
+                
+                
+                
+                
+            <p:dialog header="Detalhe do Produto"  modal="true" draggable="true" toggleSpeed="4000" width="500" closeSpeed="900" resizable="false" widgetVar="produtodetalhe" >
+                    
+                    <div class="row"  >
+                                     <div class="col-50">
+                                        <p:outputLabel for="ddescricao" value="Descricao"/>
+                                        <p:inputText id="ddescricao" maxlength="255" value="#{produtoMB.produto.descricao}" readonly="true"/>
+                                    </div>
+                                 
+         
+                                </div>
+                                
+                                
+                                <div class="row">
+                                    
+                                    <div class="col-25">
+                                        <p:outputLabel for="dquantidade" value="Estoque"/>
+                                        <p:inputText  id="dquantidade" value="#{produtoMB.produto.qtd}" readonly="true"/>
+                                    </div>
+                                                                             
+                                        <div class="col-25">
+                                                <p:outputLabel for="dpcompra" value="Preço"/>
+                                                <p:inputNumber id="dpcompra" value="#{produtoMB.produto.preco}"  symbol="R$"  readonly="true"/>
+                                        </div>
+                                        
+                                        <div class="col-25">
+                                                <p:outputLabel for="dpdata" value="Data"/>
+                                                <p:calendar id="dpdata" value="#{produtoMB.produto.data}"  pattern="dd/MM/yyyy"   locale="pt" required="true" readonly="true"/>
+                                        </div>
+                                        
+                                        <div class="col-50">
+                                            <p:outputLabel for="dusuario" value="Usuario de ultima alteracao"/>
+                                             <p:inputText id="dusuario" maxlength="255" value="#{produtoMB.produto.usuarioUltimaAlteracao}" readonly="true"/>
+                                        </div>
+                                        
+                                </div>
+                                    
+                </p:dialog>
+                
+                
+            </h:form>
+        </p:panel>
+	</ui:define>
+	
+</ui:composition>
