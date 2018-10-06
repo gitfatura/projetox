@@ -1,0 +1,225 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/WEB-INF/templates/Layout.xhtml">
+    
+    <ui:define name="content">
+			<p:panel id="toggleable" header="Carros" toggleable="false" closable="false"  toggleSpeed="500" closeSpeed="500" 
+			widgetVar="panel" style="margin-top: 60px;margin-bottom:10px;">
+				
+			<p:commandButton value="+" type="button" onclick="PF('dialogcarro').show();"/>
+			
+			<h:form id="frmcarro">
+		 											            	
+				<p:dataTable var="carro" id="carros" value="#{carroMB.carros}" 
+					rows="10" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15,50"  paginatorPosition="bottom" emptyMessage="Nenhum carros encontrado">
+					
+				 					
+					<p:column style="width: 60px">
+							 <p:commandButton oncomplete="PF('atualizacarro').show()" icon="ui-icon-pencil"  process="@this" update="frmcarro">
+									<f:setPropertyActionListener value="#{carro}" target="#{carroMB.carro}" />
+							 </p:commandButton>
+					</p:column>
+						
+					<p:column headerText="Codigo">
+						<h:outputText value="#{carro.id}" />
+					</p:column>
+					
+						
+					<p:column headerText="Marca">
+						<h:outputText value="#{carro.marca}" />
+					</p:column>
+					
+					
+					<p:column headerText="Modelo">
+						<h:outputText value="#{carro.modelo}" />
+					</p:column>
+					
+					
+					<p:column headerText="Placa">
+						<h:outputText value="#{carro.placa}" />
+					</p:column>
+					
+					<p:column headerText="Cliente" style="width: 110px">
+						<h:outputText value="#{carro.cliente.nome}" />
+					</p:column>
+										
+					
+					<p:column style="width: 60px">    			
+							<p:commandButton oncomplete="PF('removercarro').show()" icon="ui-icon-trash" process="@this" update="frmcarro">
+									<f:setPropertyActionListener value="#{carro}" target="#{carroMB.carro}" />
+							</p:commandButton>
+					</p:column>
+					
+					<p:column style="width: 60px">    			
+							<p:commandButton oncomplete="PF('carrodetalhe').show()" icon="ui-icon-search" process="@this" update="frmcarro">
+									<f:setPropertyActionListener value="#{carro}" target="#{carroMB.carro}" />
+							</p:commandButton>
+					</p:column>
+					
+				</p:dataTable>
+				
+				<p:dialog header="Deseja realmente excluir o carro" modal="true" widgetVar="removercarro" width="360" height="100"  resizable="false" >
+					
+						<div class="col-70">
+							<p:outputLabel value="#{carroMB.carro.marca}"/><hr/>
+						</div>
+																		
+						<p:button value="Não" onclick="PF('removercarro').hide(); return false;" />
+						<p:commandButton value="Sim" action="#{carroMB.remove}" update="frmcarro:carros"  onclick="PF('removercarro').hide()"/>
+															
+				</p:dialog>
+				
+				<p:dialog header="Atualizar carro" modal="true" draggable="true" toggleSpeed="700" width="700" height="250" closeSpeed="900" resizable="false" widgetVar="atualizacarro" style="margin-top: 50px;margin-bottom:40px">
+						
+					<div class="row" >
+						<div class="col-50">
+		                	<p:outputLabel for="amarca" value="Marca" />
+		                        <p:selectOneMenu id="amarca" value="#{carroMB.carro.marca}" required="true" requiredMessage="Fornecedor obrigatorio" style="width:100%">
+		                            <f:selectItem itemValue="" itemLabel="Selecione um Marca" />
+		                            <f:selectItem itemValue="Ford" itemLabel="Ford" />
+		                            <f:selectItem itemValue="Chevrolet" itemLabel="Chevrolet" />
+		                            <f:selectItem itemValue="Hyundai" itemLabel="Hyundai" />
+		                            <f:selectItem itemValue="Volkswagen" itemLabel="Volkswagen" />
+		                        </p:selectOneMenu>
+		                 </div>
+		                 
+		            </div>
+		            <br/>
+		            
+		            <div class="row" >
+		            	<div class="col-50">
+		                	<p:outputLabel for="amodelo" value="Modelo"/>
+		                    <p:inputText id="amodelo"  value="#{carroMB.carro.modelo}"  required="true" requiredMessage="Modelo obrigatorio"/>
+		                </div>
+		                <div class="col-50">
+			            	<p:outputLabel for="aplaca" value="Placa"/>
+			                <p:inputText   id="aplaca"  value="#{carroMB.carro.placa}"  required="true" requiredMessage="Placa obrigatorio"/>
+		                </div>
+							
+					 	
+									                
+		            </div>
+										
+		            <div class="row" >
+						<div class="col-50">
+							<p:outputLabel for="acliente" value="Clientes" />
+		                	<p:selectOneMenu id="acliente" value="#{carroMB.carro.cliente}" required="true" requiredMessage="Cliente obrigatorio" style="width:100%">
+		                		<f:selectItem itemValue="null" itemLabel="Selecione um Cliente" />
+		                		<f:selectItems value="#{carroMB.clientes}" var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.nome}"  />
+		                	</p:selectOneMenu>
+				       	</div>
+		            </div>													
+					<br/>											
+				<p:commandButton value="Registrar" action="#{carroMB.update}" update="frmcarro" />
+															
+				</p:dialog>
+				
+				<p:dialog header="Detalhe dos Carros"  modal="true" draggable="true" toggleSpeed="700" width="700" height="250"  closeSpeed="500" resizable="false" widgetVar="carrodetalhe" style="margin-top: 50px;margin-bottom:40px">
+					
+					<div class="row">
+		                    
+		                  <div class="col-40">		                  
+		                  		<p:outputLabel for="dcodigo" value="Codigo"/>
+		                        <p:inputText   id="dcodigo"  value="#{carroMB.carro.id}" readonly="true"/>
+		                  </div>
+		                    
+		                  <div class="col-40">
+		                  		<p:outputLabel for="dmarca" value="Modelo"/>
+		                        <p:inputText   id="dmarca"  value="#{carroMB.carro.marca}" readonly="true"/>
+		                  </div>
+					</div>
+		            
+		            <div class="row">
+		             				
+		   				  <div class="col-40">
+		                 		<p:outputLabel for="dmodelo" value="Modelo"/>
+		                        <p:inputText id="dmodelo" maxlength="255" value="#{carroMB.carro.modelo}" readonly="true"/>
+		                  </div>
+		 					
+		 				  <div class="col-40">
+		                  		<p:outputLabel for="ddata" value="Data ultima alteração"/>
+		                        <p:calendar  id="ddata" value="#{carroMB.carro.dataUltimaAlteracao}" pattern="dd/MM/yyyy" locale="pt" readonly="true"/>
+		                  </div>
+		             </div>
+		            
+		              <div class="row">
+		                
+		                  <div class="col-50">
+		                  		<p:outputLabel for="dusuario" value="Usuario ultima alteração"/>
+		                        <p:inputText  id="dusuario" value="#{carroMB.carro.usuarioUltimaAlteracao}" readonly="true"/>
+		                  </div>
+		                 		
+		   				  <div class="col-50">
+		                 		<p:outputLabel for="dcliente" value="Cliente"/>
+		                        <p:inputText id="dcliente" maxlength="255" value="#{carroMB.carro.cliente.nome}" readonly="true"/>
+		                  </div>
+		 					 			 	
+		             </div>
+		                  									
+				</p:dialog>
+				
+			</h:form>
+				
+			<p:dialog header="Novo Carro" widgetVar="dialogcarro" modal="true"  draggable="true" width="700" height="230"  resizable="false" >
+							
+						<h:form id="cadastrocarro">
+
+							<div class="row" >
+								<div class="col-50">
+		                        <p:outputLabel for="nmarca" value="Marca" />
+		                        <p:selectOneMenu id="nmarca" value="#{carroMB.carro.marca}" required="true" requiredMessage="Fornecedor obrigatorio" style="width:100%">
+		                            <f:selectItem itemValue="" itemLabel="Selecione um Marca" />
+		                            <f:selectItem itemValue="Ford" itemLabel="Ford" />
+		                            <f:selectItem itemValue="Chevrolet" itemLabel="Chevrolet" />
+		                            <f:selectItem itemValue="Hyundai" itemLabel="Hyundai" />
+		                            <f:selectItem itemValue="Volkswagen" itemLabel="Volkswagen" />
+		                        </p:selectOneMenu>
+		                        </div>
+		                        
+		                        <div class="col-50">
+									<p:outputLabel for="nmodelo" value="Modelo"/>
+									<p:inputText   id="nmodelo"  value="#{carroMB.carro.modelo}"  required="true" requiredMessage="Modelo obrigatória"/>
+								</div>
+		                        
+		                    </div><br/>
+                    
+									
+							<div class="row" >
+								<div class="col-50">
+									<p:outputLabel for="nplaca" value="Placa"/>
+									<p:inputText styleClass="placa"  id="nplaca"  value="#{carroMB.carro.placa}"  required="true" requiredMessage="Placa obrigatória"/>
+								</div>
+								
+								<div class="col-50">
+									<p:outputLabel for="ncliente" value="Clientes" />
+		                        		<p:selectOneMenu id="ncliente" value="#{carroMB.carro.cliente}" required="true" requiredMessage="Cliente obrigatorio" style="width:100%">
+		                            		<f:selectItem itemValue="null" itemLabel="Selecione um Cliente" />
+		                            		<f:selectItems value="#{carroMB.clientes}" var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.nome}"  />
+		                        		</p:selectOneMenu>
+				                </div>
+								     
+							</div><br/>
+							
+														
+								
+						
+						 
+						
+							<p:commandButton value="Registrar" action="#{carroMB.grava}" ajax="true" update="@form" process="@all"/>
+						
+                									
+						</h:form>
+															 	
+						<p:ajax event="close" update="frmcarro"/>
+													
+					</p:dialog>		 					
+				
+		</p:panel>
+	
+	</ui:define>
+</ui:composition>	

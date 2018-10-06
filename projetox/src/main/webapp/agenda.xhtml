@@ -1,0 +1,109 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/Layout.xhtml">
+    <ui:define name="content">
+        <style type="text/css">
+ 		.ui-panel {
+ 		margin-top:70px
+ 		}
+ 		.inlineCalendarDemo > .hasDatepicker {
+ 		padding-left: 50px;
+ 		}
+ 
+        </style>
+        <h:form id="frmproduto">
+          
+            <div class="ContainerIndent ui-fluid">
+            
+                <p:panel>
+  
+                    <div class="ContainerIndent">
+                        <span class="FontBold Fs18 hardblue">Agenda</span>
+                    <p:messages id="msg" closable="true" />
+        			
+					</div>
+  
+                    <div class="Container">
+                        <div class="Container60 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:outputLabel for="nome" value="Nome"/>
+                                    <p:inputText value="#{agendaMB.agenda.nome}" styleClass="FontBold Fs18 hardblue" id="nome" required="true" requiredMessage="Nome obrigatorio"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container20 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:outputLabel for="telefone" value="Telefone"/>
+                                    <p:inputText value="#{agendaMB.agenda.telefone}" styleClass="FontBold Fs18 hardblue telefone" placeholder="(   )     -    " id="telefone"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container20 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:outputLabel for="celular" value="Celular"/>
+                                    <p:inputText value="#{agendaMB.agenda.celular}" styleClass="FontBold Fs18 hardblue celular" placeholder="(   )     -    " id="celular"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="Container">
+                        <div class="Container40 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:outputLabel for="email" value="Email"/>
+                                    <p:inputText value="#{agendaMB.agenda.email}" styleClass="FontBold Fs18 hardblue" id="email"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container60 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:outputLabel for="endereco" value="Site"/>
+                                    <p:inputText value="#{agendaMB.agenda.site}" styleClass="FontBold Fs18 hardblue" id="endereco"/>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                       <div class="EmptyBox20"></div>
+                    <div class="Container">
+                        <div class="Container20 Responsive50">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:commandButton action="#{agendaMB.grava}" ajax="true" global="false" update="@form" process="@all"  styleClass="FontBold Fs18 hardblue" value="Registrar"/>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>	
+                    
+                
+                  </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
